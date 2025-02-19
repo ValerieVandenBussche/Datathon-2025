@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
+# In[2]:
 
 
 from flask import Flask, render_template_string, request, url_for, jsonify, redirect
@@ -10,8 +10,6 @@ import numpy as np
 import pandas as pd
 import math
 import time
-import matplotlib.pyplot as plt
-import matplotlib.image as mpimg
 
 
 # In[2]:
@@ -166,7 +164,7 @@ def generate_plot2():
     return filename
 
 
-# In[7]:
+# In[1]:
 
 
 app = Flask(__name__)
@@ -1255,7 +1253,7 @@ def like():
     df.loc[matching_row,"clicked_time"] = time.time()
     matching_row_int = matching_row[0]  # Extract integer from index
     matching_row_neutr = all_images[matching_row_int]['score']
-    neutrality_score = [min(1, score + 0.1 * matching_row_neutr[i]) if matching_row_neutr[i] > 0 else max(-1, score - 0.1 * matching_row_neutr[i]) for i, score in enumerate(neutrality_score)]
+    neutrality_score = [min(1, score + 0.3 * matching_row_neutr[i]) if matching_row_neutr[i] > 0 else max(-1, score - 0.3 * matching_row_neutr[i]) for i, score in enumerate(neutrality_score)]
     #neutrality_score = [min(1, score + 0.1 * sd[i]) if score > 0 else min(1, score - 0.1 * sd[i]) for i, score in enumerate(neutrality_score)]
     #neutrality_score = [min(1.0, score + 0.1) if score > 0.5 else min(1.0, score - 0.1) for score in neutrality_score]
     #counter = sum(df['like']+df['dislike'])
@@ -1289,7 +1287,7 @@ def dislike():
     df.loc[matching_row,"clicked_time"] = time.time()
     matching_row_int = matching_row[0]  # Extract integer from index
     matching_row_neutr = all_images[matching_row_int]['score']
-    neutrality_score = [max(-1, score - 0.1 * matching_row_neutr[i]) if matching_row_neutr[i] > 0 else min(1, score + 0.1 * matching_row_neutr[i]) for i, score in enumerate(neutrality_score)]
+    neutrality_score = [max(-1, score - 0.3 * matching_row_neutr[i]) if matching_row_neutr[i] > 0 else min(1, score + 0.3 * matching_row_neutr[i]) for i, score in enumerate(neutrality_score)]
     #neutrality_score = [max(0.0, score - 0.1) if score > 0.5 else max(0.0, score + 0.1) for score in neutrality_score]
     #counter = sum(df['like']+df['dislike'])
     counter = len(neutr)
@@ -1308,7 +1306,5 @@ def dislike():
 from werkzeug.serving import run_simple
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=10000)
-
-
+    run_simple("localhost", 5001, app)
 
