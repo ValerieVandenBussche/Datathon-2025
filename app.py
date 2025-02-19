@@ -1308,12 +1308,7 @@ def dislike():
 from werkzeug.serving import run_simple
 
 if __name__ == "__main__":
-    run_simple("localhost", 5001, app)
+    app.run(host='0.0.0.0', port=10000)
 
 
-# In[19]:
-
-
-neutr
-       
 
